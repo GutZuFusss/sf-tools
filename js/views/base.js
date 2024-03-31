@@ -602,8 +602,13 @@ class Localization {
     }
 
     static #translationUrl (locale) {
+        // TODO: introduce host constant
+        const isGitHubPages = window.location.hostname === 'gutzufusss.github.io';
+        if (true == isGitHubPages) {
+            // hosted @ "gutzufusss.github.io/sf-tools" subdirectory
+            return `https://gutzufusss.github.io/sf-tools/sf-tools/js/lang/${locale}.json`
+        }
         const useRemote = window.document.location.protocol === 'file:';
-
         return `${useRemote ? 'https://gutzufusss.github.io/sf-tools' : ''}/js/lang/${locale}.json`;
     }
 
