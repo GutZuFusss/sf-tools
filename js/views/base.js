@@ -604,7 +604,7 @@ class Localization {
     static #translationUrl (locale) {
         const useRemote = window.document.location.protocol === 'file:';
 
-        return `${useRemote ? 'https://sftools.mar21.eu' : ''}/js/lang/${locale}.json`;
+        return `${useRemote ? 'https://gutzufusss.github.io/sf-tools' : ''}/js/lang/${locale}.json`;
     }
 
     static async translatePage () {
