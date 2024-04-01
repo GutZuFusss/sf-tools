@@ -406,7 +406,7 @@ class Site {
 }
 
 class SiteAPI {
-    static #baseUrl = 'https://api.sftools.mar21.eu/api/';
+    static #baseUrl = 'https://api.gutzufusss.github.io/sf-tools/api/';
 
     static #log (method, url) {
         Logger.log('APICALL', `${method} ${url}`)

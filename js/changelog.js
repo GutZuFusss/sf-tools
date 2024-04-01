@@ -1024,13 +1024,13 @@ const CHANGELOG = {
         'Added info pupup to filter with all available options.'
     ],
     'v3.649': [
-        'Added experimental lazy loading that can be enabled by using the following url: <a href="https://sftools.mar21.eu/stats?lazy">https://sftools.mar21.eu/stats?lazy</a>'
+        'Added experimental lazy loading that can be enabled by using the following url: <a href="https://gutzufusss.github.io/sf-tools/stats?lazy">https://gutzufusss.github.io/sf-tools/stats?lazy</a>'
     ],
     'v3.630': [
         'Fixed a bug that caused settings to be invisible / froze the tool.',
         'Added <code>const</code> keyword that allows you to set your own constants.',
         'Keyword <code>show as</code> can now also be used in Me tab.',
-        'You can now separate stored data into different slots via url <code>https://sftools.mar21.eu/stats?slot=1</code>.<br/>The default slot number is 0 and it can be any positive number.<br/>Please note that they share settings and any changes will affect all other slots.'
+        'You can now separate stored data into different slots via url <code>https://gutzufusss.github.io/sf-tools/stats?slot=1</code>.<br/>The default slot number is 0 and it can be any positive number.<br/>Please note that they share settings and any changes will affect all other slots.'
     ],
     'v3.616': [
         '<code>Last Active</code> header no longer works as before.<br/>To use colors like before, you\'ll need to modify the header in <a href="res/update0.png">this way</a>.'
