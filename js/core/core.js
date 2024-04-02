@@ -705,6 +705,13 @@ class Actions {
 
                     player.Data.tag = existingTags;
                 }
+
+                for (const group of groups) {
+                    let existingTags = _wrapOrEmpty(group.Data.tag)
+                    _pushUnlessIncludes(existingTags, tag);
+
+                    group.Data.tag = existingTags;
+                }
             }
         }
 
@@ -725,25 +732,70 @@ class Actions {
                 }
             }
         }
+
+        const tagGroup = this.#actions.filter((action) => action.type === 'tag_group');
+        for (const { type, args: [tagExpression, conditionExpression] } of tagGroup) {
+            Logger.log('ACTIONS', `Applying action ${type}`)
+
+            for (const group of groups) {
+                const scope = new ExpressionScope().with(group, group);
+
+                if (conditionExpression ? conditionExpression.eval(scope) : true) {
+                    const tag = tagExpression.eval(scope);
+
+                    let existingTags = _wrapOrEmpty(group.Data.tag)
+                    _pushUnlessIncludes(existingTags, tag);
+
+                    group.Data.tag = existingTags;
+                }
+            }
+        }
     }
 
     static #applyFilters (players, groups) {
-        const selects = this.#actions.filter((action) => action.type === 'select_player').map((action) => action.args[0]);
-        const rejects = this.#actions.filter((action) => action.type === 'reject_player').map((action) => action.args[0]);
+        const selectsPlayer = this.#actions.filter((action) => action.type === 'select_player').map((action) => action.args[0]);
+        const rejectsPlayer = this.#actions.filter((action) => action.type === 'reject_player').map((action) => action.args[0]);
 
-        if (rejects.length) {
+        if (rejectsPlayer.length) {
+            Logger.log('ACTIONS', `Applying action ${'reject_player'}`);
+
             _filterInPlace(players, (player) => {
                 const scope = new ExpressionScope().with(player, player);
 
-                return !rejects.some((expression) => expression.eval(scope));
+                return !rejectsPlayer.some((expression) => expression.eval(scope));
             })
         }
 
-        if (selects.length) {
+        if (selectsPlayer.length) {
+            Logger.log('ACTIONS', `Applying action ${'select_player'}`);
+
             _filterInPlace(players, (player) => {
                 const scope = new ExpressionScope().with(player, player);
 
-                return selects.some((expression) => expression.eval(scope));
+                return selectsPlayer.some((expression) => expression.eval(scope));
+            })
+        }
+
+        const selectsGroup = this.#actions.filter((action) => action.type === 'select_group').map((action) => action.args[0]);
+        const rejectsGroup = this.#actions.filter((action) => action.type === 'reject_group').map((action) => action.args[0]);
+
+        if (rejectsGroup.length) {
+            Logger.log('ACTIONS', `Applying action ${'reject_group'}`);
+
+            _filterInPlace(groups, (group) => {
+                const scope = new ExpressionScope().with(group, group);
+
+                return !rejectsGroup.some((expression) => expression.eval(scope));
+            })
+        }
+
+        if (selectsGroup.length) {
+            Logger.log('ACTIONS', `Applying action ${'select_group'}`);
+
+            _filterInPlace(groups, (group) => {
+                const scope = new ExpressionScope().with(group, group);
+
+                return selectsGroup.some((expression) => expression.eval(scope));
             })
         }
     }
