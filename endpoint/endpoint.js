@@ -14,7 +14,7 @@ class EndpointController {
 
     load () {
         return new Promise((resolve) => {
-            this.iframe.src = '/endpoint/index.html';
+            this.iframe.src = '/sf-tools/endpoint/index.html';
             this.iframe.addEventListener('load', async () => {
                 this.window = this.iframe.contentWindow;
                 await this.window.load();
@@ -569,7 +569,7 @@ class EndpointDialog extends Dialog {
     // Unity loader
     #createStep2 () {
         return `
-            <img class="ui centered image pulse-loader" src="/endpoint/logo.png">
+            <img class="ui centered image pulse-loader" src="/sf-tools/endpoint/logo.png">
             <h3 class="ui inverted centered header">${this.intl('step2.title')}</h3>
         `;
     }
